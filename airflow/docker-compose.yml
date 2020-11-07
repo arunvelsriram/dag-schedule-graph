@@ -23,6 +23,7 @@ services:
       - LOAD_EX=n
       - EXECUTOR=Local
       - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+      - AIRFLOW__WEBSERVER__RELOAD_ON_PLUGIN_CHANGE=true
     volumes:
       - "../:/dag-timeline"
       - "${PWD}/requirements.txt:/requirements.txt"
@@ -46,6 +47,7 @@ services:
       - EXECUTOR=Local
       - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow_rbac:airflow_rbac@postgres:5432/airflow_rbac
       - AIRFLOW__WEBSERVER__RBAC=true
+      - AIRFLOW__WEBSERVER__RELOAD_ON_PLUGIN_CHANGE=true
     volumes:
       - "../:/dag-timeline"
       - "${PWD}/requirements.txt:/requirements.txt"
