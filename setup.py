@@ -17,7 +17,7 @@ setup(
     install_requires=install_requires,
     entry_points={
         'airflow.plugins': [
-            'DAGTimelinePlugin = dag_timeline.dag_timeline:DAGTimelinePlugin'
+            'DAGTimelinePlugin = dag_timeline:DAGTimelinePlugin'
         ]
     }
 )

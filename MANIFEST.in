@@ -1,0 +1,8 @@
+include README.md
+include MANIFEST.in
+include setup.py
+recursive-include dag_timeline/ *
+
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]
+recursive-exclude * .*.sw[a-z]
