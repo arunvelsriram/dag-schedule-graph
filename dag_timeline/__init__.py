@@ -1,14 +1,14 @@
-import logging
-
 from airflow.plugins_manager import AirflowPlugin
 from airflow.settings import RBAC
 from flask import Blueprint
 
-plugin_name = 'dag_timeline'
-logger = logging.getLogger(plugin_name)
-bp = Blueprint(plugin_name,
+from dag_timeline.log import logger
+
+bp = Blueprint('dag_timeline',
                __name__,
-               template_folder='templates')
+               url_prefix='/dag-timeline',
+               template_folder='templates',
+               static_folder='static')
 appbuilder_views = []
 
 if RBAC:
@@ -20,6 +20,6 @@ else:
 
 
 class DAGTimelinePlugin(AirflowPlugin):
-    name = plugin_name
+    name = 'dag_timeline'
     flask_blueprints = [bp]
     appbuilder_views = appbuilder_views
