@@ -4,6 +4,12 @@ install_requires = [
     'apache-airflow>=1.10.4'
 ]
 
+extras_require = {
+    'dev': [
+        'psycopg2'
+    ]
+}
+
 setup(
     name='dag-timeline',
     version='0.1.0',
@@ -15,6 +21,7 @@ setup(
     author_email='arunvelsriram@gmail.com',
     description='Airflow plugin to show DAG schedules in a timeline',
     install_requires=install_requires,
+    extras_require=extras_require,
     entry_points={
         'airflow.plugins': [
             'DAGTimelinePlugin = dag_timeline:DAGTimelinePlugin'

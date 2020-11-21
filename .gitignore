@@ -142,3 +142,10 @@ cython_debug/
 
 # Idea
 .idea
+
+# Airflow
+airflow/airflow.cfg
+airflow/logs
+airflow/unittests.cfg
+airflow/webserver_config.py
+airflow/airflow-webserver.pid
