@@ -1,12 +1,15 @@
 from setuptools import setup, find_packages
 
 install_requires = [
-    'apache-airflow>=1.10.4'
+    'apache-airflow>=1.10.4',
+    'croniter>=0.3.36'
 ]
 
 extras_require = {
     'dev': [
-        'psycopg2'
+        'psycopg2',
+        'pytest',
+        'pytest-env'
     ]
 }
 
