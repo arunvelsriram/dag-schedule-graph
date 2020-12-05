@@ -15,39 +15,10 @@
     <script src="{{ url_for_asset('moment.js') }}"></script>
     <script src="{{ url_for('dag_timeline.static', filename='js/timelines-chart.min.js') }}"></script>
     <script type="text/javascript">
-        const data = [
-          {
-            group: "group",
-            data: [
-              {
-                label: "dag1",
-                data: [
-                  {
-                    timeRange: [moment().toDate(), moment().add(1, 'hour').toDate()],
-                    val: "dag1-a"
-                  },
-                  {
-                    timeRange: [moment().add(1, 'day').toDate(), moment().add(1, 'day').add(1, 'hour').toDate()],
-                    val: "dag1-b"
-                  }
-                ]
-              },
-              {
-                label: "dag2",
-                data: [
-                  {
-                    timeRange: [moment().toDate(), moment().add(1, 'hour').toDate()],
-                    val: "dag2-a"
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-
+        const data =  {{ timeline_data | safe }};
         TimelinesChart()(document.body)
-        .zScaleLabel('My Scale Units')
-        .zQualitative(true)
-        .data(data);
+            .zQualitative(true)
+            .useUtc(true)
+            .data(data);
     </script>
 {% endblock %}

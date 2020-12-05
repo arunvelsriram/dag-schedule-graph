@@ -26,12 +26,19 @@ def is_future_start_date(dag: DAG, base_dt: Pendulum):
            is_future_date(dag.default_args.get('start_date'), base_dt)
 
 
+def timestamp_ms(dt: Pendulum):
+    return dt.timestamp() * 1000
+
+
 def get_timeline_data(from_dt: Pendulum, to_dt: Pendulum):
     logger.info('Getting all DAGs')
     dags = get_dags()
     timeline_data = []
     for dag in dags:
         logger.debug(f'dag_id: {dag.dag_id}, start_date:{dag.start_date}, schedule_interval: {dag.schedule_interval}')
+        if dag.is_subdag:
+            logger.info(f'Skip processing sub-dag {dag.dag_id}')
+            continue
         if dag.schedule_interval is None:
             logger.info(f'Skip processing {dag.dag_id} as it has no schedule_interval')
             continue
@@ -43,7 +50,8 @@ def get_timeline_data(from_dt: Pendulum, to_dt: Pendulum):
         for run_date in dag.get_run_dates(from_dt, to_dt):
             start = pendulum.instance(run_date)
             end = start.add(hours=1)
-            data.append({'timeRange': [start.timestamp(), end.timestamp()], 'val': dag.dag_id})
+            data.append(
+                {'timeRange': [timestamp_ms(start), timestamp_ms(end)], 'val': dag.dag_id})
 
         if len(data) > 0:
             logger.info(f'Skip adding {dag.dag_id} to timeline data as it has no runs')

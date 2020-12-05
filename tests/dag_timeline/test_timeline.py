@@ -24,7 +24,17 @@ class TestTimeline:
         assert dags == [test_dag_1, test_dag_2]
 
     @patch('dag_timeline.timeline.get_dags')
-    def test_get_data_should_skip_dags_with_schedule_interval_none(self, mock_get_dags):
+    def test_get_timeline_data_should_skip_sub_dags(self, mock_get_dags):
+        from_dt = pendulum_datetime(2020, 1, 1)
+        to_dt = pendulum_datetime(2020, 1, 2)
+        test_dag = DAG('test-dag-1')
+        test_dag.is_subdag = True
+        mock_get_dags.return_value = [test_dag]
+
+        assert get_timeline_data(from_dt, to_dt) == [{'group': '', 'data': []}]
+
+    @patch('dag_timeline.timeline.get_dags')
+    def test_get_timeline_data_should_skip_dags_with_schedule_interval_none(self, mock_get_dags):
         from_dt = pendulum_datetime(2020, 1, 1)
         to_dt = pendulum_datetime(2020, 1, 2)
         mock_get_dags.return_value = [
@@ -34,7 +44,7 @@ class TestTimeline:
         assert get_timeline_data(from_dt, to_dt) == [{'group': '', 'data': []}]
 
     @patch('dag_timeline.timeline.get_dags')
-    def test_get_data_should_skip_dags_with_future_start_date(self, mock_get_dags):
+    def test_get_timeline_data_should_skip_dags_with_future_start_date(self, mock_get_dags):
         from_dt = pendulum_datetime(2020, 1, 1)
         to_dt = pendulum_datetime(2020, 1, 2)
         mock_get_dags.return_value = [
@@ -44,7 +54,7 @@ class TestTimeline:
         assert get_timeline_data(from_dt, to_dt) == [{'group': '', 'data': []}]
 
     @patch('dag_timeline.timeline.get_dags')
-    def test_get_data_should_skip_dags_with_future_start_date_in_default_args(self, mock_get_dags):
+    def test_get_timeline_data_should_skip_dags_with_future_start_date_in_default_args(self, mock_get_dags):
         from_dt = pendulum_datetime(2020, 1, 1)
         to_dt = pendulum_datetime(2020, 1, 2)
         mock_get_dags.return_value = [
@@ -54,7 +64,7 @@ class TestTimeline:
         assert get_timeline_data(from_dt, to_dt) == [{'group': '', 'data': []}]
 
     @patch('dag_timeline.timeline.get_dags')
-    def test_get_data_for_cron_expression(self, mock_get_dags):
+    def test_get_timeline_data_for_cron_expression(self, mock_get_dags):
         from_dt = pendulum_datetime(2020, 1, 1)
         to_dt = pendulum_datetime(2020, 1, 2)
         mock_get_dags.return_value = [
@@ -66,20 +76,20 @@ class TestTimeline:
             'data': [{
                 'label': 'test-dag-1',
                 'data': [{
-                    'timeRange': [pendulum_datetime(2020, 1, 1, 0).timestamp(),
-                                  pendulum_datetime(2020, 1, 1, 1).timestamp()],
+                    'timeRange': [pendulum_datetime(2020, 1, 1, 0).timestamp() * 1000,
+                                  pendulum_datetime(2020, 1, 1, 1).timestamp() * 1000],
                     'val': 'test-dag-1'
                 }, {
-                    'timeRange': [pendulum_datetime(2020, 1, 1, 8).timestamp(),
-                                  pendulum_datetime(2020, 1, 1, 9).timestamp()],
+                    'timeRange': [pendulum_datetime(2020, 1, 1, 8).timestamp() * 1000,
+                                  pendulum_datetime(2020, 1, 1, 9).timestamp() * 1000],
                     'val': 'test-dag-1'
                 }, {
-                    'timeRange': [pendulum_datetime(2020, 1, 1, 16).timestamp(),
-                                  pendulum_datetime(2020, 1, 1, 17).timestamp()],
+                    'timeRange': [pendulum_datetime(2020, 1, 1, 16).timestamp() * 1000,
+                                  pendulum_datetime(2020, 1, 1, 17).timestamp() * 1000],
                     'val': 'test-dag-1'
                 }, {
-                    'timeRange': [pendulum_datetime(2020, 1, 2, 0).timestamp(),
-                                  pendulum_datetime(2020, 1, 2, 1).timestamp()],
+                    'timeRange': [pendulum_datetime(2020, 1, 2, 0).timestamp() * 1000,
+                                  pendulum_datetime(2020, 1, 2, 1).timestamp() * 1000],
                     'val': 'test-dag-1'
                 }]
             }]
@@ -87,7 +97,7 @@ class TestTimeline:
         assert get_timeline_data(from_dt, to_dt) == expected
 
     @patch('dag_timeline.timeline.get_dags')
-    def test_get_data_for_airflow_cron_preset(self, mock_get_dags):
+    def test_get_timeline_data_for_airflow_cron_preset(self, mock_get_dags):
         from_dt = pendulum_datetime(2020, 1, 5)
         to_dt = pendulum_datetime(2020, 1, 6)
         mock_get_dags.return_value = [
@@ -98,8 +108,8 @@ class TestTimeline:
             'data': [{
                 'label': 'test-dag-1',
                 'data': [{
-                    'timeRange': [pendulum_datetime(2020, 1, 5, 0).timestamp(),
-                                  pendulum_datetime(2020, 1, 5, 1).timestamp()],
+                    'timeRange': [pendulum_datetime(2020, 1, 5, 0).timestamp() * 1000,
+                                  pendulum_datetime(2020, 1, 5, 1).timestamp() * 1000],
                     'val': 'test-dag-1'
                 }]
             }]
@@ -107,7 +117,7 @@ class TestTimeline:
         assert get_timeline_data(from_dt, to_dt) == expected
 
     @patch('dag_timeline.timeline.get_dags')
-    def test_get_data_for_timedelta(self, mock_get_dags):
+    def test_get_timeline_data_for_timedelta(self, mock_get_dags):
         from_dt = pendulum_datetime(2020, 1, 1)
         to_dt = pendulum_datetime(2020, 1, 2)
         mock_get_dags.return_value = [
@@ -118,20 +128,20 @@ class TestTimeline:
             'data': [{
                 'label': 'test-dag-1',
                 'data': [{
-                    'timeRange': [pendulum_datetime(2020, 1, 1, 0).timestamp(),
-                                  pendulum_datetime(2020, 1, 1, 1).timestamp()],
+                    'timeRange': [pendulum_datetime(2020, 1, 1, 0).timestamp() * 1000,
+                                  pendulum_datetime(2020, 1, 1, 1).timestamp() * 1000],
                     'val': 'test-dag-1'
                 }, {
-                    'timeRange': [pendulum_datetime(2020, 1, 1, 8).timestamp(),
-                                  pendulum_datetime(2020, 1, 1, 9).timestamp()],
+                    'timeRange': [pendulum_datetime(2020, 1, 1, 8).timestamp() * 1000,
+                                  pendulum_datetime(2020, 1, 1, 9).timestamp() * 1000],
                     'val': 'test-dag-1'
                 }, {
-                    'timeRange': [pendulum_datetime(2020, 1, 1, 16).timestamp(),
-                                  pendulum_datetime(2020, 1, 1, 17).timestamp()],
+                    'timeRange': [pendulum_datetime(2020, 1, 1, 16).timestamp() * 1000,
+                                  pendulum_datetime(2020, 1, 1, 17).timestamp() * 1000],
                     'val': 'test-dag-1'
                 }, {
-                    'timeRange': [pendulum_datetime(2020, 1, 2, 0).timestamp(),
-                                  pendulum_datetime(2020, 1, 2, 1).timestamp()],
+                    'timeRange': [pendulum_datetime(2020, 1, 2, 0).timestamp() * 1000,
+                                  pendulum_datetime(2020, 1, 2, 1).timestamp() * 1000],
                     'val': 'test-dag-1'
                 }]
             }]
