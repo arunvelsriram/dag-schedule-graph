@@ -9,7 +9,8 @@ extras_require = {
     'dev': [
         'psycopg2',
         'pytest',
-        'pytest-env'
+        'pytest-env',
+        'ipython'
     ]
 }
 
