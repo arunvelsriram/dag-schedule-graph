@@ -66,16 +66,20 @@ class TestTimeline:
             'data': [{
                 'label': 'test-dag-1',
                 'data': [{
-                    'timeRange': [pendulum_datetime(2020, 1, 1, 0), pendulum_datetime(2020, 1, 1, 1)],
+                    'timeRange': [pendulum_datetime(2020, 1, 1, 0).timestamp(),
+                                  pendulum_datetime(2020, 1, 1, 1).timestamp()],
                     'val': 'test-dag-1'
                 }, {
-                    'timeRange': [pendulum_datetime(2020, 1, 1, 8), pendulum_datetime(2020, 1, 1, 9)],
+                    'timeRange': [pendulum_datetime(2020, 1, 1, 8).timestamp(),
+                                  pendulum_datetime(2020, 1, 1, 9).timestamp()],
                     'val': 'test-dag-1'
                 }, {
-                    'timeRange': [pendulum_datetime(2020, 1, 1, 16), pendulum_datetime(2020, 1, 1, 17)],
+                    'timeRange': [pendulum_datetime(2020, 1, 1, 16).timestamp(),
+                                  pendulum_datetime(2020, 1, 1, 17).timestamp()],
                     'val': 'test-dag-1'
                 }, {
-                    'timeRange': [pendulum_datetime(2020, 1, 2, 0), pendulum_datetime(2020, 1, 2, 1)],
+                    'timeRange': [pendulum_datetime(2020, 1, 2, 0).timestamp(),
+                                  pendulum_datetime(2020, 1, 2, 1).timestamp()],
                     'val': 'test-dag-1'
                 }]
             }]
@@ -94,7 +98,8 @@ class TestTimeline:
             'data': [{
                 'label': 'test-dag-1',
                 'data': [{
-                    'timeRange': [pendulum_datetime(2020, 1, 5, 0), pendulum_datetime(2020, 1, 5, 1)],
+                    'timeRange': [pendulum_datetime(2020, 1, 5, 0).timestamp(),
+                                  pendulum_datetime(2020, 1, 5, 1).timestamp()],
                     'val': 'test-dag-1'
                 }]
             }]
@@ -113,16 +118,20 @@ class TestTimeline:
             'data': [{
                 'label': 'test-dag-1',
                 'data': [{
-                    'timeRange': [pendulum_datetime(2020, 1, 1, 0), pendulum_datetime(2020, 1, 1, 1)],
+                    'timeRange': [pendulum_datetime(2020, 1, 1, 0).timestamp(),
+                                  pendulum_datetime(2020, 1, 1, 1).timestamp()],
                     'val': 'test-dag-1'
                 }, {
-                    'timeRange': [pendulum_datetime(2020, 1, 1, 8), pendulum_datetime(2020, 1, 1, 9)],
+                    'timeRange': [pendulum_datetime(2020, 1, 1, 8).timestamp(),
+                                  pendulum_datetime(2020, 1, 1, 9).timestamp()],
                     'val': 'test-dag-1'
                 }, {
-                    'timeRange': [pendulum_datetime(2020, 1, 1, 16), pendulum_datetime(2020, 1, 1, 17)],
+                    'timeRange': [pendulum_datetime(2020, 1, 1, 16).timestamp(),
+                                  pendulum_datetime(2020, 1, 1, 17).timestamp()],
                     'val': 'test-dag-1'
                 }, {
-                    'timeRange': [pendulum_datetime(2020, 1, 2, 0), pendulum_datetime(2020, 1, 2, 1)],
+                    'timeRange': [pendulum_datetime(2020, 1, 2, 0).timestamp(),
+                                  pendulum_datetime(2020, 1, 2, 1).timestamp()],
                     'val': 'test-dag-1'
                 }]
             }]

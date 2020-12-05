@@ -43,7 +43,7 @@ def get_timeline_data(from_dt: Pendulum, to_dt: Pendulum):
         for run_date in dag.get_run_dates(from_dt, to_dt):
             start = pendulum.instance(run_date)
             end = start.add(hours=1)
-            data.append({'timeRange': [start, end], 'val': dag.dag_id})
+            data.append({'timeRange': [start.timestamp(), end.timestamp()], 'val': dag.dag_id})
 
         if len(data) > 0:
             logger.info(f'Skip adding {dag.dag_id} to timeline data as it has no runs')
