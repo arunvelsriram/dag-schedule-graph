@@ -8,7 +8,9 @@ Airflow plugin for visualising DAG schedules within 24 hour window of a day.
 
 ## Install
 
-W.I.P
+```shell script
+pip install dag-schedule-graph
+```
 
 ## Development
 
