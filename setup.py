@@ -16,10 +16,11 @@ extras_require = {
 setup(
     name='dag-schedule-graph',
     version='0.1.0',
+    download_url='https://github.com/arunvelsriram/dag-schedule-graph/archive/v0.1.0.tar/gz',
     packages=find_packages(exclude=['tests']),
     include_package_data=True,
-    url='',
-    license='',
+    url='https://github.com/arunvelsriram/dag-schedule-graph',
+    license='MIT',
     author='Arunvel Sriram',
     author_email='arunvelsriram@gmail.com',
     description='Airflow plugin for visualising DAG schedules within 24 hour window of a day.',
