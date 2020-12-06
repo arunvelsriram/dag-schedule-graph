@@ -9,7 +9,8 @@ extras_require = {
         'psycopg2',
         'pytest',
         'pytest-env',
-        'ipython'
+        'ipython',
+        'twine'
     ]
 }
 
