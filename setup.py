@@ -16,7 +16,7 @@ extras_require = {
 setup(
     name='dag-schedule-graph',
     version='0.1.0',
-    download_url='https://github.com/arunvelsriram/dag-schedule-graph/archive/v0.1.0.tar/gz',
+    download_url='https://github.com/arunvelsriram/dag-schedule-graph/archive/v0.1.0.tar.gz',
     packages=find_packages(exclude=['tests']),
     include_package_data=True,
     url='https://github.com/arunvelsriram/dag-schedule-graph',
