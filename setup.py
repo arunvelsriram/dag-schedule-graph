@@ -22,7 +22,7 @@ setup(
     license='',
     author='Arunvel Sriram',
     author_email='arunvelsriram@gmail.com',
-    description='Airflow plugin for visualising DAG schedules within 24 hours',
+    description='Airflow plugin for visualising DAG schedules within 24 hour window of a day.',
     install_requires=install_requires,
     extras_require=extras_require,
     entry_points={
