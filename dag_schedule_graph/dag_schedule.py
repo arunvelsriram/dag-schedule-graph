@@ -5,7 +5,7 @@ from airflow import DAG
 from airflow.models import DagBag
 from pendulum import Pendulum
 
-from dag_timeline import logger
+from dag_schedule_graph import logger
 
 
 def is_future_date(dt: Pendulum, base_dt: Pendulum) -> bool:

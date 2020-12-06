@@ -149,4 +149,4 @@ airflow/logs
 airflow/unittests.cfg
 airflow/webserver_config.py
 airflow/airflow-webserver.pid
-tests/dag_timeline/airflow
+tests/dag_schedule_graph/airflow

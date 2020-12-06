@@ -1,8 +1,7 @@
 from setuptools import setup, find_packages
 
 install_requires = [
-    'apache-airflow>=1.10.4',
-    'croniter>=0.3.36'
+    'apache-airflow>=1.10.4'
 ]
 
 extras_require = {
@@ -15,7 +14,7 @@ extras_require = {
 }
 
 setup(
-    name='dag-timeline',
+    name='dag-schedule-graph',
     version='0.1.0',
     packages=find_packages(exclude=['tests']),
     include_package_data=True,
@@ -23,12 +22,12 @@ setup(
     license='',
     author='Arunvel Sriram',
     author_email='arunvelsriram@gmail.com',
-    description='Airflow plugin to show DAG schedules in a timeline',
+    description='Airflow plugin for visualising DAG schedules within 24 hours',
     install_requires=install_requires,
     extras_require=extras_require,
     entry_points={
         'airflow.plugins': [
-            'DAGTimelinePlugin = dag_timeline:DAGTimelinePlugin'
+            'DAGScheduleGraphPlugin = dag_schedule_graph:DAGScheduleGraphPlugin'
         ]
     }
 )

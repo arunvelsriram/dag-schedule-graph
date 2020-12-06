@@ -4,12 +4,12 @@ from unittest.mock import patch
 from airflow import DAG
 from pendulum import datetime as pendulum_datetime
 
-from dag_timeline.timeline import get_dag_schedules, get_qualified_dags
+from dag_schedule_graph.dag_schedule import get_dag_schedules, get_qualified_dags
 
 
-class TestTimeline:
+class TestDAGSchedule:
 
-    @patch('dag_timeline.timeline.DagBag')
+    @patch('dag_schedule_graph.dag_schedule.DagBag')
     def test_get_qualified_dags(self, mock_dag_bag):
         test_dag_1 = DAG('test-dag-1', start_date=pendulum_datetime(2020, 1, 1))
         test_dag_2 = DAG('test-dag-2', start_date=pendulum_datetime(2020, 1, 2))
@@ -25,7 +25,7 @@ class TestTimeline:
 
         assert dags == [test_dag_1, test_dag_2]
 
-    @patch('dag_timeline.timeline.DagBag')
+    @patch('dag_schedule_graph.dag_schedule.DagBag')
     def test_get_qualified_dags_should_skip_sub_dags(self, mock_dag_bag):
         base_dt = pendulum_datetime(2020, 1, 2)
         test_dag = DAG('test-dag')
@@ -36,7 +36,7 @@ class TestTimeline:
 
         assert dags == []
 
-    @patch('dag_timeline.timeline.DagBag')
+    @patch('dag_schedule_graph.dag_schedule.DagBag')
     def test_get_qualified_dags_should_skip_dags_with_schedule_interval_none(self, mock_dag_bag):
         base_dt = pendulum_datetime(2020, 1, 2)
         test_dag = DAG('test-dag', schedule_interval=None)
@@ -46,7 +46,7 @@ class TestTimeline:
 
         assert dags == []
 
-    @patch('dag_timeline.timeline.DagBag')
+    @patch('dag_schedule_graph.dag_schedule.DagBag')
     def test_get_qualified_dags_should_skip_dags_with_future_start_date(self, mock_dag_bag):
         base_dt = pendulum_datetime(2020, 1, 2)
         test_dag = DAG('test-dag', start_date=pendulum_datetime(3020, 1, 1))
@@ -56,7 +56,7 @@ class TestTimeline:
 
         assert dags == []
 
-    @patch('dag_timeline.timeline.DagBag')
+    @patch('dag_schedule_graph.dag_schedule.DagBag')
     def test_get_qualified_dags_should_skip_dags_with_future_start_date_in_default_args(self, mock_dag_bag):
         base_dt = pendulum_datetime(2020, 1, 2)
         test_dag = DAG('test-dag-1', default_args={"start_date": pendulum_datetime(3020, 1, 1)})
@@ -66,8 +66,8 @@ class TestTimeline:
 
         assert dags == []
 
-    @patch('dag_timeline.timeline.get_qualified_dags')
-    def test_get_timeline_data_for_cron_expression(self, mock_get_qualified_dags):
+    @patch('dag_schedule_graph.dag_schedule.get_qualified_dags')
+    def test_get_dag_schedule_for_cron_expression(self, mock_get_qualified_dags):
         from_dt = pendulum_datetime(2020, 1, 1)
         to_dt = pendulum_datetime(2020, 1, 2)
         mock_get_qualified_dags.return_value = [
@@ -81,8 +81,8 @@ class TestTimeline:
                                    pendulum_datetime(2020, 1, 2, 0).timestamp() * 1000]}]
         assert get_dag_schedules(from_dt, to_dt) == expected
 
-    @patch('dag_timeline.timeline.get_qualified_dags')
-    def test_get_timeline_data_for_airflow_cron_preset(self, mock_get_qualified_dags):
+    @patch('dag_schedule_graph.dag_schedule.get_qualified_dags')
+    def test_get_dag_schedule_for_airflow_cron_preset(self, mock_get_qualified_dags):
         from_dt = pendulum_datetime(2020, 1, 5)
         to_dt = pendulum_datetime(2020, 1, 6)
         mock_get_qualified_dags.return_value = [
@@ -93,8 +93,8 @@ class TestTimeline:
                      'schedules': [pendulum_datetime(2020, 1, 5, 0).timestamp() * 1000]}]
         assert get_dag_schedules(from_dt, to_dt) == expected
 
-    @patch('dag_timeline.timeline.get_qualified_dags')
-    def test_get_timeline_data_for_timedelta(self, mock_get_qualified_dags):
+    @patch('dag_schedule_graph.dag_schedule.get_qualified_dags')
+    def test_get_dag_schedule_for_timedelta(self, mock_get_qualified_dags):
         from_dt = pendulum_datetime(2020, 1, 1)
         to_dt = pendulum_datetime(2020, 1, 2)
         mock_get_qualified_dags.return_value = [

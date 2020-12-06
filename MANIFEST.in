@@ -1,7 +1,7 @@
 include README.md
 include MANIFEST.in
 include setup.py
-recursive-include dag_timeline/ *
+recursive-include dag_schedule_graph/ *
 
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]
