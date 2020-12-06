@@ -4,21 +4,106 @@
 
 {% block content %}
     <h1>DAG Timeline</h1>
-    <div id="timeline">
-
+    <div class="chart-wrapper" style="position: relative; height: 75vh;">
+        <canvas id="chart"></canvas>
     </div>
 {% endblock %}
 
 {% block tail %}
     {{ super() }}
 
-    <script src="{{ url_for_asset('moment.js') }}"></script>
-    <script src="{{ url_for('dag_timeline.static', filename='js/timelines-chart.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.6.1/randomColor.min.js"
+            integrity="sha512-vPeZ7JCboHcfpqSx5ZD+/jpEhS4JpXxfz9orSvAPPj0EKUVShU2tgy7XkU+oujBJKnWmu4hU7r9MMQNWPfXsYw=="
+            crossorigin="anonymous"></script>
     <script type="text/javascript">
-        const data =  {{ timeline_data | safe }};
-        TimelinesChart()(document.body)
-            .zQualitative(true)
-            .useUtc(true)
-            .data(data);
+        function getDatasets(dagSchedules) {
+            defaults = {
+                showLine: false,
+                pointRadius: 5,
+                pointHoverRadius: 8
+            }
+            return dagSchedules.map(function(dag, index) {
+                const data = dag.schedules.map(function(schedule) {
+                    return { x: schedule, y: index + 1 }; // ignore y=0 to prevent schedules from falling on the main axis
+                });
+                const color = randomColor({ format: 'rgba', alpha: 1 });
+                const dataset = {
+                    label: dag.dag_id,
+                    backgroundColor: color,
+                    borderColor: color,
+                    pointBackgroundColor: color,
+                    pointBorderColor: color,
+                    data: data
+                };
+                return Object.assign(dataset, defaults);
+            });
+        }
+
+        function mapYValueToDagId(dagSchedules) {
+            const o = {};
+            for (let i = 0; i < dagSchedules.length; i++) {
+                o[i+1] = dagSchedules[i].dag_id;
+            }
+            return o;
+        }
+
+        const dagSchedules = {{ dag_schedules | safe }};
+        const yValueToDagId = mapYValueToDagId(dagSchedules);
+        const datasets = getDatasets(dagSchedules);
+        const ctx = document.getElementById('chart').getContext('2d');
+        const chartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            hover: {
+                mode: 'nearest'
+            },
+            tooltips: {
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        return yValueToDagId[tooltipItem.yLabel];
+                    }
+                }
+            },
+            scales: {
+                xAxes: [{
+                    type: 'time',
+                    time: {
+                        unit: 'hour',
+                        unitStepSize: 1,
+                         displayFormats: {
+                            'hour': 'HH:mm',
+                         },
+                         tooltipFormat: 'DD-MM-YYYY HH:mm:ss'
+                    },
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Schedule'
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    ticks: {
+                        beginAtZero: true,
+                        stepSize: 1,
+                        callback: function(value, index, values) {
+                            return yValueToDagId[value];
+                        }
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'DAG'
+                    }
+                }]
+            }
+        };
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+				datasets: datasets
+			},
+            options: chartOptions
+        });
     </script>
 {% endblock %}
