@@ -150,3 +150,6 @@ airflow/unittests.cfg
 airflow/webserver_config.py
 airflow/airflow-webserver.pid
 tests/dag_schedule_graph/airflow
+
+# OS X
+.DS_Store
