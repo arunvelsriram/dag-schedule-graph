@@ -48,6 +48,9 @@
             return o;
         }
 
+        moment.tz.setDefault("UTC");
+        const fromDtTm = {{ from_dttm | safe }}
+        const toDtTm = {{ to_dttm | safe }}
         const dagSchedules = {{ dag_schedules | safe }};
         const yValueToDagId = mapYValueToDagId(dagSchedules);
         const datasets = getDatasets(dagSchedules);
@@ -67,6 +70,7 @@
             },
             scales: {
                 xAxes: [{
+                    display: true,
                     type: 'time',
                     time: {
                         unit: 'hour',
@@ -76,7 +80,10 @@
                          },
                          tooltipFormat: 'DD-MM-YYYY HH:mm:ss'
                     },
-                    display: true,
+                    ticks: {
+                        min: fromDtTm,
+                        max: toDtTm
+                    },
                     scaleLabel: {
                         display: true,
                         labelString: 'Schedule'
