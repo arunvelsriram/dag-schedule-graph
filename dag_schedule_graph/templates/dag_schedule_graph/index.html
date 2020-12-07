@@ -12,10 +12,8 @@
 {% block tail %}
     {{ super() }}
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.6.1/randomColor.min.js"
-            integrity="sha512-vPeZ7JCboHcfpqSx5ZD+/jpEhS4JpXxfz9orSvAPPj0EKUVShU2tgy7XkU+oujBJKnWmu4hU7r9MMQNWPfXsYw=="
-            crossorigin="anonymous"></script>
+    <script src="{{ url_for('dag_schedule_graph.static', filename='js/Chart-v2.9.4.min.js') }}"></script>
+    <script src="{{ url_for('dag_schedule_graph.static', filename='js/randomColor-0.6.1.min.js') }}"></script>
     <script type="text/javascript">
         function getDatasets(dagSchedules) {
             defaults = {
