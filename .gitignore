@@ -105,7 +105,6 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
 .venv
 env/
 venv/
@@ -153,3 +152,7 @@ tests/dag_schedule_graph/airflow
 
 # OS X
 .DS_Store
+
+# UI
+node_modules
+dag_schedule_graph/static/dist

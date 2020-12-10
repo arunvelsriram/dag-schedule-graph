@@ -18,8 +18,11 @@ pip install dag-schedule-graph
 # Create virtual environment using conda  
 conda create -n dag-schedule-graph python=3.7.9
 
+# Activate the environment
+conda activate dag-schedule-graph
+
 # Load environemnt variables
-source .envrc
+source .env
 
 # Create Postgres database and user
 createuser airflow_rbac
@@ -36,6 +39,9 @@ airflow initdb
 
 # Create Airflow user 
 airflow create_user -u admin -e admin@gmail.com -p admin -f admin -l admin -r Admin
+
+# Build static assets
+npm run build
 
 # Start Airflow Webserver
 airflow webserver

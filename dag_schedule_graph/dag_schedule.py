@@ -1,4 +1,4 @@
-from typing import Dict, List, Union
+from typing import Dict, List
 
 import pendulum
 from airflow import DAG
@@ -39,25 +39,20 @@ def get_qualified_dags(base_dt: Pendulum) -> List[DAG]:
     return [dag for dag_id, dag in DagBag().dags.items() if check(dag_id, dag)]
 
 
-DAGSchedule = List[Dict[str, Union[str, List[float]]]]
+DAGSchedule = Dict[float, List[str]]
 
 
-def get_dag_schedules(from_dt: Pendulum, to_dt: Pendulum) -> DAGSchedule:
+def get_dag_schedules(from_dttm: Pendulum, to_dttm: Pendulum) -> DAGSchedule:
     logger.info('Getting qualified DAGs')
-    dags = get_qualified_dags(to_dt)
-    dag_schedules = []
+    dags = get_qualified_dags(to_dttm)
+    dag_schedules = {}
     for dag in dags:
         logger.debug(
             f'DAG - dag_id: {dag.dag_id}, start_date: {dag.start_date}, schedule_interval: {dag.schedule_interval}')
-        schedules = []
-        logger.debug(f'Getting schedules {dag.dag_id}')
-        for run_date in dag.get_run_dates(from_dt, to_dt):
+        for run_date in dag.get_run_dates(from_dttm, to_dttm):
             start = pendulum.instance(run_date)
             start_ms = timestamp_ms(start)
-            schedules.append(start_ms)
-
-        if len(schedules) > 0:
-            logger.info(f'Skipping DAG with no schedules: {dag.dag_id}')
-            dag_schedules.append({'dag_id': dag.dag_id, 'schedules': schedules})
+            dag_ids = dag_schedules.setdefault(start_ms, [])
+            dag_ids.append(dag.dag_id)
 
     return dag_schedules
