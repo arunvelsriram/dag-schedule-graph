@@ -1,6 +1,8 @@
 from os import path
 from setuptools import setup, find_packages
 
+VERSION = '0.1.2'
+
 install_requires = [
     'apache-airflow>=1.10.4'
 ]
@@ -21,8 +23,8 @@ with open(path.join(this_dir, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='dag-schedule-graph',
-    version='0.1.2',
-    download_url='https://github.com/arunvelsriram/dag-schedule-graph/archive/v0.1.2.tar.gz',
+    version=VERSION,
+    download_url=f'https://github.com/arunvelsriram/dag-schedule-graph/archive/v{VERSION}.tar.gz',
     packages=find_packages(exclude=['tests']),
     include_package_data=True,
     url='https://github.com/arunvelsriram/dag-schedule-graph',
