@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -e
+
+echo "==> Building UI assets"
+npm install
+npm run build:production
+echo
+echo "==> Listing UI assets"
+ls -lh dag_schedule_graph/static/dist
+
+echo
+echo  "==> Building plugin distribution"
+echo "==> Clean dist/"
+[ -d dist ] && rm -rf dist
+python setup.py sdist
+echo
+echo "==> Listing plugin distribution"
+ls  -lh dist

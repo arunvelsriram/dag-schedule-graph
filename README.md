@@ -8,13 +8,26 @@ Airflow plugin for visualising DAG schedules within 24 hour window of a day.
 
 ## Install
 
-```shell script
+```shell
 pip install dag-schedule-graph
+```
+
+## Trying it out using Docker
+
+```shell
+# Start the services
+docker-compose up
+
+# Access the webserver
+open http://localhost:8082/dag-schedule-graph/
+
+# Cleanup containers, networks and volumes
+docker-compose down -v
 ```
 
 ## Development
 
-```shell script
+```shell
 # Create virtual environment using conda  
 conda create -n dag-schedule-graph python=3.7.9
 

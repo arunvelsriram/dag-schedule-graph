@@ -1,8 +1,14 @@
 include README.md
 include MANIFEST.in
+include LICENSE.txt
 include setup.py
 recursive-include dag_schedule_graph/ *
 
+# remove unnecessary files
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]
 recursive-exclude * .*.sw[a-z]
+
+# remove if added accidentally
+exclude .env
+exclude .envrc

@@ -156,3 +156,6 @@ tests/dag_schedule_graph/airflow
 # UI
 node_modules
 dag_schedule_graph/static/dist
+
+# Envs and Secrets
+.envrc

@@ -1,4 +1,5 @@
 from os import path
+
 from setuptools import setup, find_packages
 
 VERSION = '0.1.2'
