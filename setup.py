@@ -2,7 +2,7 @@ from os import path
 
 from setuptools import setup, find_packages
 
-VERSION = '0.2.1'
+VERSION = '0.2.2'
 
 install_requires = [
     'apache-airflow>=1.10.4'
