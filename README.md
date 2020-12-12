@@ -2,9 +2,9 @@
 
 Airflow plugin for visualising DAG schedules within 24 hour window of a day.
 
-> Note: Project is in its early development stage so bugs are expected.
-
 ![Airflow dag-schedule-graph plugin screenshot](./images/screenshot-1.png)
+
+Each bubble indicates the number of DAGs that will run at that instant. Bubble radius is relative to the DAG count.
 
 ## Install
 
