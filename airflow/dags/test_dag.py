@@ -13,7 +13,7 @@ args = {
 dag1 = DAG(
     dag_id='test_dag1',
     default_args=args,
-    schedule_interval='0 */2 * * *',
+    schedule_interval='0 5 * * *',
     tags=['example']
 )
 

@@ -1,5 +1,6 @@
 const path = require('path');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 
 const STATIC_DIR = path.resolve(__dirname, './dag_schedule_graph/static');
 const BUILD_DIR = path.resolve(__dirname, './dag_schedule_graph/static/dist');
@@ -19,11 +20,9 @@ module.exports = (env, options) => {
             path: BUILD_DIR,
             filename: '[name].js'
         },
-        externals: {
-            moment: 'moment'
-        },
         plugins: [
-            new CleanWebpackPlugin()
+            new CleanWebpackPlugin(),
+            new MomentLocalesPlugin()
         ]
     }
 };

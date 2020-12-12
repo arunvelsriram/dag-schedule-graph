@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -e
+
+echo "==> Run JS tests"
+npm run test
+
+echo "==> Run Python tets"
+pytest tests/

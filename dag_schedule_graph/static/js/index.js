@@ -1,5 +1,5 @@
 import Chart from 'chart.js';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import {DATE_TIME_FORMAT, getDatasets, getXLabel} from './chart-helper.js';
 
 moment.tz.setDefault('UTC');
