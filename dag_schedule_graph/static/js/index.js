@@ -44,9 +44,6 @@ function createChart(canvas, fromTimestamp, toTimestamp, dagSchedules) {
                 yAxes: [
                     {
                         display: true,
-                        ticks: {
-                            beginAtZero: true
-                        },
                         scaleLabel: {
                             display: true,
                             labelString: 'DAG Count'
